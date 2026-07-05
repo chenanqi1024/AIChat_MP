@@ -35,7 +35,15 @@
             mode="aspectFill"
           ></image>
           <view class="message-bubble {{item.sender == 'user' ? 'bubble-user' : 'bubble-assistant'}}">
-            <text>{{item.content}}</text>
+            <image
+              wx:if="{{item.imagePath}}"
+              class="bubble-image"
+              src="{{item.imagePath}}"
+              mode="aspectFill"
+              bindtap="previewMessageImage"
+              data-src="{{item.imagePath}}"
+            ></image>
+            <text wx:if="{{item.content}}" class="message-text">{{item.content}}</text>
           </view>
         </view>
 
@@ -66,19 +74,34 @@
       </scroll-view>
     </view>
 
+    <view wx:if="{{selectedImage}}" class="selected-image-panel">
+      <image class="selected-image" src="{{selectedImage.tempFilePath}}" mode="aspectFill" bindtap="previewSelectedImage"></image>
+      <view class="selected-image-meta">
+        <text class="selected-image-title">已选择图片</text>
+        <text class="selected-image-subtitle">可补充文字一起发送</text>
+      </view>
+      <button class="remove-image-button" bindtap="removeSelectedImage">×</button>
+    </view>
+
     <view class="input-bar">
+      <button class="image-button" bindtap="chooseImage" loading="{{convertingImage}}" disabled="{{sending || convertingImage}}">
+        图
+      </button>
       <view class="input-shell">
-        <input
+        <textarea
           class="chat-input"
           value="{{inputValue}}"
           placeholder="说点什么..."
+          auto-height="{{true}}"
+          maxlength="10000"
           cursor-spacing="22"
-          confirm-type="send"
+          adjust-position="{{true}}"
+          show-confirm-bar="{{false}}"
+          hold-keyboard="{{true}}"
           bindinput="onInput"
-          bindconfirm="sendMessage"
-        />
+        ></textarea>
       </view>
-      <button class="send-button {{inputValue ? 'send-button-active' : ''}}" bindtap="sendMessage" disabled="{{!inputValue || sending}}">
+      <button class="send-button {{canSend ? 'send-button-active' : ''}}" bindtap="sendMessage" disabled="{{!canSend || sending || convertingImage}}">
         发
       </button>
     </view>

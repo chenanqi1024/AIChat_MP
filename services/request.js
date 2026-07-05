@@ -25,6 +25,35 @@ const normalizeError = (statusCode, body) => {
   }
 }
 
+const normalizeRequestFail = err => {
+  const errMsg = err && err.errMsg ? err.errMsg : ''
+
+  if (errMsg.indexOf('url not in domain list') >= 0 || errMsg.indexOf('not in domain list') >= 0) {
+    return {
+      success: false,
+      code: 'DOMAIN_NOT_CONFIGURED',
+      message: '请求域名未配置，请在微信开发者工具开启“不校验合法域名”，或在小程序后台配置 request 合法域名',
+      details: errMsg
+    }
+  }
+
+  if (errMsg.indexOf('timeout') >= 0) {
+    return {
+      success: false,
+      code: 'REQUEST_TIMEOUT',
+      message: '请求超时，请稍后重试',
+      details: errMsg
+    }
+  }
+
+  return {
+    success: false,
+    code: 'NETWORK_ERROR',
+    message: '请求失败，请检查网络、域名白名单或开发者工具网络设置',
+    details: errMsg
+  }
+}
+
 const request = options => {
   const token = getToken()
   const header = {
@@ -58,12 +87,8 @@ const request = options => {
         }
         reject(error)
       },
-      fail() {
-        reject({
-          success: false,
-          code: 'NETWORK_ERROR',
-          message: '网络连接失败，请检查网络后重试'
-        })
+      fail(err) {
+        reject(normalizeRequestFail(err))
       }
     })
   })

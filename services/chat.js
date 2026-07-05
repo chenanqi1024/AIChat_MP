@@ -109,18 +109,23 @@ const getHistory = (roleId, beforeId) => request({
   }
 })
 
-const sendChat = (roleId, message, image) => request({
-  baseUrl: CHAT_API_BASE,
-  url: '/chat',
-  method: 'POST',
-  auth: true,
-  data: {
+const sendChat = (roleId, message, image) => {
+  const data = {
     roleId,
-    message,
-    image,
     stream: false
   }
-})
+
+  if (message) data.message = message
+  if (image) data.image = image
+
+  return request({
+    baseUrl: CHAT_API_BASE,
+    url: '/chat',
+    method: 'POST',
+    auth: true,
+    data
+  })
+}
 
 const clearHistory = roleId => request({
   baseUrl: CHAT_API_BASE,

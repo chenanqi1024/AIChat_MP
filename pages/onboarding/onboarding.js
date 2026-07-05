@@ -66,6 +66,18 @@ Page({
     })
   },
 
+  onRoleSwiperChange(e) {
+    const selectedIndex = e.detail.current
+    const selectedRole = this.data.roles[selectedIndex]
+
+    if (!selectedRole) return
+
+    this.setData({
+      selectedIndex,
+      selectedRole
+    })
+  },
+
   startChat() {
     storage.setSelectedRoleId(this.data.selectedRole.id)
 

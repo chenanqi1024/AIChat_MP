@@ -1,5 +1,7 @@
 .chat-page {
   background: #f5f0fb;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .chat-bg,
@@ -14,24 +16,24 @@
 }
 
 .chat-bg {
-  opacity: 0.72;
+  opacity: 0.5;
 }
 
 .chat-bg-mask {
-  background: rgba(255, 255, 255, 0.26);
+  background: rgba(255, 255, 255, 0.38);
 }
 
 .chat-shell {
   position: relative;
   z-index: 2;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
 .chat-nav {
-  padding: calc(env(safe-area-inset-top) + 20rpx) 28rpx 20rpx;
-  min-height: 150rpx;
+  padding: 66rpx 24rpx 18rpx;
+  min-height: 154rpx;
   display: flex;
   align-items: center;
   gap: 18rpx;
@@ -40,9 +42,9 @@
 }
 
 .nav-button {
-  width: 68rpx;
-  height: 68rpx;
-  line-height: 64rpx;
+  width: 64rpx;
+  height: 64rpx;
+  line-height: 60rpx;
   text-align: center;
   border-radius: 50%;
   color: #4a4254;
@@ -52,8 +54,8 @@
 }
 
 .nav-avatar {
-  width: 76rpx;
-  height: 76rpx;
+  width: 72rpx;
+  height: 72rpx;
   border-radius: 50%;
   border: 4rpx solid #ffffff;
   flex-shrink: 0;
@@ -81,11 +83,11 @@
 .message-scroll {
   flex: 1;
   min-height: 0;
-  height: 0;
+  height: auto;
 }
 
 .message-list {
-  padding: 30rpx 28rpx 24rpx;
+  padding: 26rpx 24rpx 20rpx;
 }
 
 .loading-text {
@@ -98,7 +100,7 @@
 .message-row {
   display: flex;
   gap: 14rpx;
-  margin-bottom: 26rpx;
+  margin-bottom: 22rpx;
 }
 
 .message-row-user {
@@ -118,12 +120,24 @@
 }
 
 .message-bubble {
-  max-width: 548rpx;
-  padding: 20rpx 26rpx;
-  border-radius: 28rpx;
+  max-width: 540rpx;
+  padding: 18rpx 24rpx;
+  border-radius: 26rpx;
   font-size: 28rpx;
   line-height: 1.58;
   word-break: break-all;
+}
+
+.message-text {
+  display: block;
+}
+
+.bubble-image {
+  width: 300rpx;
+  height: 220rpx;
+  border-radius: 20rpx;
+  margin-bottom: 12rpx;
+  background: rgba(255, 255, 255, 0.35);
 }
 
 .bubble-user {
@@ -149,7 +163,56 @@
 }
 
 .quick-topic-wrap {
-  padding: 10rpx 28rpx 14rpx;
+  padding: 8rpx 24rpx 12rpx;
+  flex-shrink: 0;
+}
+
+.selected-image-panel {
+  margin: 0 24rpx 12rpx;
+  padding: 14rpx;
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  border-radius: 24rpx;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 8rpx 18rpx rgba(58, 43, 76, 0.08);
+  flex-shrink: 0;
+}
+
+.selected-image {
+  width: 104rpx;
+  height: 104rpx;
+  border-radius: 18rpx;
+  flex-shrink: 0;
+}
+
+.selected-image-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.selected-image-title {
+  display: block;
+  color: #30283b;
+  font-size: 26rpx;
+  font-weight: 600;
+  margin-bottom: 6rpx;
+}
+
+.selected-image-subtitle {
+  display: block;
+  color: #8a8195;
+  font-size: 22rpx;
+}
+
+.remove-image-button {
+  width: 52rpx;
+  height: 52rpx;
+  border-radius: 50%;
+  color: #7c7289;
+  font-size: 30rpx;
+  background: #f1eef5;
+  flex-shrink: 0;
 }
 
 .quick-topic-scroll {
@@ -157,12 +220,13 @@
 }
 
 .quick-topic-track {
-  display: inline-flex;
+  display: flex;
   gap: 16rpx;
+  min-width: 100%;
 }
 
 .topic-pill {
-  display: inline-flex;
+  display: flex;
   height: 64rpx;
   align-items: center;
   padding: 0 26rpx;
@@ -172,22 +236,37 @@
   background: rgba(255, 255, 255, 0.92);
   border: 1rpx solid rgba(224, 216, 232, 0.9);
   box-shadow: 0 8rpx 18rpx rgba(58, 43, 76, 0.08);
+  flex-shrink: 0;
 }
 
 .input-bar {
-  padding: 18rpx 28rpx calc(env(safe-area-inset-bottom) + 22rpx);
+  padding: 18rpx 20rpx 30rpx;
   display: flex;
-  align-items: center;
-  gap: 16rpx;
+  align-items: flex-end;
+  gap: 14rpx;
   background: rgba(255, 255, 255, 0.86);
   border-top: 1rpx solid rgba(230, 224, 236, 0.72);
+  flex-shrink: 0;
+}
+
+.image-button {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  color: #805bd4;
+  font-size: 26rpx;
+  font-weight: 600;
+  background: #f1eef5;
+  flex-shrink: 0;
 }
 
 .input-shell {
   flex: 1;
-  min-height: 78rpx;
-  padding: 0 28rpx;
-  border-radius: 999rpx;
+  min-width: 0;
+  min-height: 96rpx;
+  max-height: 188rpx;
+  padding: 20rpx 28rpx;
+  border-radius: 32rpx;
   display: flex;
   align-items: center;
   background: #f1eef5;
@@ -195,14 +274,18 @@
 
 .chat-input {
   width: 100%;
+  min-height: 56rpx;
+  max-height: 148rpx;
+  line-height: 40rpx;
   color: #30283b;
   font-size: 28rpx;
+  background: transparent;
 }
 
 .send-button {
-  width: 78rpx;
-  height: 78rpx;
-  line-height: 78rpx;
+  width: 80rpx;
+  height: 80rpx;
+  line-height: 80rpx;
   text-align: center;
   border-radius: 50%;
   color: #a59dac;
