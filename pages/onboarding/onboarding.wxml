@@ -1,0 +1,103 @@
+<view class="app-page onboarding-page">
+  <view class="soft-bg soft-bg-a"></view>
+  <view class="soft-bg soft-bg-b"></view>
+
+  <view class="safe-shell onboarding-shell">
+    <view class="hero">
+      <view class="eyebrow">
+        <text class="eyebrow-mark">✦</text>
+        <text>欢迎来到陪伴世界</text>
+      </view>
+      <text class="hero-title">选择你的陪伴角色</text>
+      <text class="hero-subtitle">每位角色都有不同的性格与陪伴方式</text>
+    </view>
+
+    <scroll-view class="role-carousel" scroll-x enhanced show-scrollbar="{{false}}">
+      <view class="role-track">
+        <view
+          wx:for="{{roles}}"
+          wx:key="id"
+          class="role-card {{index == selectedIndex ? 'role-card-active' : ''}}"
+          bindtap="selectRole"
+          data-index="{{index}}"
+        >
+          <image class="role-card-bg" src="{{item.backgroundUrl}}" mode="aspectFill"></image>
+          <view class="role-card-mask"></view>
+          <view class="role-card-content">
+            <image class="role-avatar" src="{{item.avatarUrl}}" mode="aspectFill"></image>
+            <text class="role-name">{{item.nickname}}</text>
+            <text class="role-desc">{{item.description}}</text>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+
+    <view class="dots">
+      <view
+        wx:for="{{roles}}"
+        wx:key="id"
+        class="dot {{index == selectedIndex ? 'dot-active' : ''}}"
+      ></view>
+    </view>
+
+    <button class="primary-button" bindtap="startChat" loading="{{loadingRoles}}">
+      开始聊天
+    </button>
+  </view>
+
+  <view wx:if="{{showLogin}}" class="modal-layer">
+    <view class="modal-backdrop" bindtap="closeLogin"></view>
+    <view class="login-modal">
+      <button class="modal-close" bindtap="closeLogin">×</button>
+      <view class="login-header">
+        <view class="eyebrow login-eyebrow">
+          <text class="eyebrow-mark">✦</text>
+          <text>陪伴世界</text>
+        </view>
+        <text class="login-title">欢迎回来</text>
+        <text class="login-subtitle">使用手机号验证码登录</text>
+      </view>
+
+      <view class="form-block">
+        <text class="field-label">手机号</text>
+        <view class="phone-row">
+          <view class="country-code">
+            <text>+86</text>
+          </view>
+          <input
+            class="field-input phone-input"
+            type="number"
+            maxlength="11"
+            placeholder="请输入手机号"
+            value="{{phoneNumber}}"
+            bindinput="onPhoneInput"
+          />
+        </view>
+      </view>
+
+      <view class="form-block">
+        <text class="field-label">验证码</text>
+        <view class="code-row">
+          <input
+            class="field-input code-input"
+            maxlength="8"
+            placeholder="请输入验证码"
+            value="{{verifyCode}}"
+            bindinput="onCodeInput"
+          />
+          <button class="code-button" bindtap="handleSendCode" loading="{{sendingCode}}" disabled="{{countdown > 0 || sendingCode}}">
+            {{countdown > 0 ? countdown + '秒' : '获取验证码'}}
+          </button>
+        </view>
+      </view>
+
+      <text wx:if="{{errorText}}" class="error-text">{{errorText}}</text>
+
+      <button class="login-button" bindtap="handleLogin" loading="{{loginLoading}}">
+        登录
+      </button>
+
+      <text class="agreement">登录即表示同意《用户协议》和《隐私政策》</text>
+    </view>
+  </view>
+</view>

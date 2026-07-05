@@ -1,12 +1,15 @@
 {
   "pages": [
-    "pages/index/index",
-    "pages/logs/logs"
+    "pages/onboarding/onboarding",
+    "pages/home/home",
+    "pages/chat/chat"
   ],
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "Weixin",
-    "navigationBarBackgroundColor": "#ffffff"
+    "navigationBarTitleText": "AI 陪伴聊天",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationStyle": "custom",
+    "backgroundColor": "#fbf7ff"
   },
   "style": "v2",
   "componentFramework": "glass-easel",

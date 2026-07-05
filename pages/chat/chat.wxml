@@ -1,0 +1,86 @@
+<view class="app-page chat-page">
+  <image class="chat-bg" src="{{role.backgroundUrl}}" mode="aspectFill"></image>
+  <view class="chat-bg-mask"></view>
+
+  <view class="chat-shell">
+    <view class="chat-nav">
+      <button class="nav-button" bindtap="goBack">‹</button>
+      <image class="nav-avatar" src="{{role.avatarUrl}}" mode="aspectFill"></image>
+      <view class="nav-info">
+        <text class="nav-name">{{role.nickname}}</text>
+        <text class="nav-tag text-ellipsis">{{role.tag}}</text>
+      </view>
+      <button class="nav-button" bindtap="clearCurrentHistory">⋯</button>
+    </view>
+
+    <scroll-view
+      class="message-scroll"
+      scroll-y
+      enhanced
+      show-scrollbar="{{false}}"
+      scroll-into-view="{{scrollIntoView}}"
+    >
+      <view class="message-list">
+        <view wx:if="{{loadingHistory}}" class="loading-text">正在加载聊天记录...</view>
+
+        <view
+          wx:for="{{messages}}"
+          wx:key="id"
+          class="message-row {{item.sender == 'user' ? 'message-row-user' : 'message-row-assistant'}}"
+        >
+          <image
+            wx:if="{{item.sender != 'user'}}"
+            class="message-avatar"
+            src="{{role.avatarUrl}}"
+            mode="aspectFill"
+          ></image>
+          <view class="message-bubble {{item.sender == 'user' ? 'bubble-user' : 'bubble-assistant'}}">
+            <text>{{item.content}}</text>
+          </view>
+        </view>
+
+        <view wx:if="{{sending}}" class="message-row message-row-assistant">
+          <image class="message-avatar" src="{{role.avatarUrl}}" mode="aspectFill"></image>
+          <view class="message-bubble bubble-assistant typing-bubble">
+            <text>正在回复...</text>
+          </view>
+        </view>
+
+        <view id="bottom-anchor" class="bottom-anchor"></view>
+      </view>
+    </scroll-view>
+
+    <view class="quick-topic-wrap">
+      <scroll-view class="quick-topic-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+        <view class="quick-topic-track">
+          <button
+            wx:for="{{quickTopics}}"
+            wx:key="*this"
+            class="topic-pill"
+            bindtap="useQuickTopic"
+            data-topic="{{item}}"
+          >
+            {{item}}
+          </button>
+        </view>
+      </scroll-view>
+    </view>
+
+    <view class="input-bar">
+      <view class="input-shell">
+        <input
+          class="chat-input"
+          value="{{inputValue}}"
+          placeholder="说点什么..."
+          cursor-spacing="22"
+          confirm-type="send"
+          bindinput="onInput"
+          bindconfirm="sendMessage"
+        />
+      </view>
+      <button class="send-button {{inputValue ? 'send-button-active' : ''}}" bindtap="sendMessage" disabled="{{!inputValue || sending}}">
+        发
+      </button>
+    </view>
+  </view>
+</view>

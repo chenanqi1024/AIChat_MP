@@ -1,0 +1,97 @@
+<view class="app-page home-page">
+  <image class="home-bg" src="{{currentRole.backgroundUrl}}" mode="aspectFill"></image>
+  <view class="home-overlay"></view>
+
+  <scroll-view class="home-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="safe-shell home-shell">
+      <view class="welcome-section">
+        <view class="welcome-title-row">
+          <text class="spark">✦</text>
+          <text class="welcome-title">{{greetingText}}</text>
+        </view>
+        <text class="welcome-subtitle">今天想和谁聊聊天？</text>
+      </view>
+
+      <view class="feature-card">
+        <image class="feature-bg" src="{{currentRole.backgroundUrl}}" mode="aspectFill"></image>
+        <view class="feature-mask"></view>
+        <view class="feature-content">
+          <view class="feature-main">
+            <image class="feature-avatar" src="{{currentRole.avatarUrl}}" mode="aspectFill"></image>
+            <view class="feature-info">
+              <view class="name-row">
+                <text class="feature-name">{{currentRole.nickname}}</text>
+                <text class="role-tag">{{currentRole.tag}}</text>
+              </view>
+              <text class="feature-desc">{{currentRole.description}}</text>
+              <text class="feature-greeting">「{{currentRole.greeting}}」</text>
+            </view>
+          </view>
+          <button class="primary-button feature-button" bindtap="startCurrentChat">
+            立即聊天
+          </button>
+        </view>
+      </view>
+
+      <view class="section">
+        <text class="section-title">所有角色</text>
+        <scroll-view class="all-roles-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+          <view class="all-roles-track">
+            <view
+              wx:for="{{roles}}"
+              wx:key="id"
+              class="mini-role {{item.id == currentRole.id ? 'mini-role-active' : ''}}"
+              bindtap="selectRole"
+              data-roleid="{{item.id}}"
+            >
+              <image class="mini-avatar" src="{{item.avatarUrl}}" mode="aspectFill"></image>
+              <text class="mini-name">{{item.nickname}}</text>
+              <text class="mini-desc line-clamp-2">{{item.description}}</text>
+            </view>
+          </view>
+        </scroll-view>
+      </view>
+
+      <view class="quick-grid">
+        <button class="quick-action" bindtap="continueChat">
+          <view class="quick-icon quick-icon-purple">聊</view>
+          <text>继续聊天</text>
+        </button>
+        <button class="quick-action" bindtap="openHistory">
+          <view class="quick-icon quick-icon-blue">史</view>
+          <text>聊天记录</text>
+        </button>
+        <button class="quick-action" bindtap="reselectRole">
+          <view class="quick-icon quick-icon-pink">换</view>
+          <text>重新选择</text>
+        </button>
+      </view>
+
+      <view class="section recent-section">
+        <text class="section-title">最近聊天</text>
+        <view wx:if="{{recentChats.length}}" class="recent-list">
+          <view
+            wx:for="{{recentChats}}"
+            wx:key="roleId"
+            class="recent-item"
+            bindtap="openChatByRole"
+            data-roleid="{{item.roleId}}"
+          >
+            <image class="recent-avatar" src="{{item.role.avatarUrl}}" mode="aspectFill"></image>
+            <view class="recent-body">
+              <view class="recent-head">
+                <text class="recent-name">{{item.role.nickname}}</text>
+                <text class="recent-time">{{item.timeText}}</text>
+              </view>
+              <text class="recent-message text-ellipsis">{{item.lastMessage}}</text>
+            </view>
+            <text class="recent-arrow">›</text>
+          </view>
+        </view>
+        <view wx:else class="empty-recent">
+          <text>还没有聊天记录</text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>
